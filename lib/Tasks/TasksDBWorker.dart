@@ -39,7 +39,7 @@ class TasksDBWorker {
     Database db = await database;
     await db.insert(
       TBL_NAME,
-      task.toMap(),
+      _taskToMap(task),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 

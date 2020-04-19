@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'Notes/NotesList.dart';
+import 'Notes/Notes.dart';
+import 'Tasks/Tasks.dart';
 
 void main() => runApp(FlutterBook());
 
@@ -31,8 +32,8 @@ class FlutterBook extends StatelessWidget {
                     children: [
                       Dummy('Appointments'),
                       Dummy('Contacts'),
-                      NotesList(),
-                      Dummy('Tasks')]
+                      Notes(),
+                      Tasks()]
                 )
             )
         )
