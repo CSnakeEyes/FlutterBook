@@ -2,7 +2,6 @@ import 'package:sqflite/sqflite.dart';
 import 'NotesModel.dart';
 
 abstract class NotesDBWorker {
-
   static final NotesDBWorker db = _SqfliteNotesDBWorker._();
 
   /// Create and add the given note in this database.
@@ -21,71 +20,7 @@ abstract class NotesDBWorker {
   Future<List<Note>> getAll();
 }
 
-class _MemoryNotesDBWorker implements NotesDBWorker {
-  static const _TEST = true;
-
-  var _notes = [];
-  var _nextId = 1;
-
-  _MemoryNotesDBWorker._() {
-    if (_TEST && _notes.isEmpty) {
-      var note = Note()
-        ..title = "Exercise: P2.3 Persistence"
-        ..content = "Code database."
-        ..color = 'blue';
-      create(note);
-    }
-  }
-
-  @override
-  Future<int> create(Note note) async {
-    note = _clone(note)..id = _nextId++;
-    _notes.add(note);
-    print("Added: $note");
-    return note.id;
-  }
-
-  @override
-  Future<void> update(Note note) async {
-    var old = await get(note.id);
-    if (old != null) {
-      old..title = note.title
-        ..content = note.content
-        ..color = note.color;
-      print("Updated: $note");
-    }
-  }
-
-  @override
-  Future<void> delete(int id) async {
-    _notes.removeWhere((note) => note.id == id);
-    print("Deleted: $id");
-  }
-
-  @override
-  Future<Note> get(int id) async {
-    return _clone(_notes.firstWhere((note) => note.id == id, orElse: () => null));
-  }
-
-  @override
-  Future<List<Note>> getAll() async {
-    return List.unmodifiable(_notes);
-  }
-
-  static Note _clone(Note note) {
-    if (note != null) {
-      return Note()
-        ..id = note.id
-        ..title = note.title
-        ..content = note.content
-        ..color = note.color;
-    }
-    return null;
-  }
-}
-
 class _SqfliteNotesDBWorker implements NotesDBWorker {
-
   static const String DB_NAME = 'notes.db';
   static const String TBL_NAME = 'notes';
   static const String KEY_ID = '_id';
@@ -97,24 +32,18 @@ class _SqfliteNotesDBWorker implements NotesDBWorker {
 
   _SqfliteNotesDBWorker._();
 
-  Future<Database> get database async => 
-     _db ??= await _init();
-     
+  Future<Database> get database async => _db ??= await _init();
+
   Future<Database> _init() async {
-    return await openDatabase(DB_NAME,
-        version: 1,
-        onOpen: (db) {},
+    return await openDatabase(DB_NAME, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
-          await db.execute(
-              "CREATE TABLE IF NOT EXISTS $TBL_NAME ("
-                  "$KEY_ID INTEGER PRIMARY KEY,"
-                  "$KEY_TITLE TEXT,"
-                  "$KEY_CONTENT TEXT,"
-                  "$KEY_COLOR TEXT"
-              ")"
-          );
-        }
-    );
+      await db.execute("CREATE TABLE IF NOT EXISTS $TBL_NAME ("
+          "$KEY_ID INTEGER PRIMARY KEY,"
+          "$KEY_TITLE TEXT,"
+          "$KEY_CONTENT TEXT,"
+          "$KEY_COLOR TEXT"
+          ")");
+    });
   }
 
   @override
@@ -122,19 +51,18 @@ class _SqfliteNotesDBWorker implements NotesDBWorker {
     Database db = await database;
     int id = await db.rawInsert(
         "INSERT INTO $TBL_NAME ($KEY_TITLE, $KEY_CONTENT, $KEY_COLOR) "
-            "VALUES (?, ?, ?)",
-        [note.title, note.content, note.color]
-    );
+        "VALUES (?, ?, ?)",
+        [note.title, note.content, note.color]);
     return id;
   }
 
- @override
+  @override
   Future<void> delete(int id) async {
     Database db = await database;
     await db.delete(TBL_NAME, where: "$KEY_ID = ?", whereArgs: [id]);
   }
 
- @override
+  @override
   Future<void> update(Note note) async {
     Database db = await database;
     await db.update(TBL_NAME, _noteToMap(note),
@@ -144,8 +72,9 @@ class _SqfliteNotesDBWorker implements NotesDBWorker {
   @override
   Future<Note> get(int id) async {
     Database db = await database;
-    var values = await db.query(TBL_NAME, where: "$KEY_ID = ?", whereArgs: [id]);
-    return values.isEmpty ? null : _noteFromMap(values.first); 
+    var values =
+        await db.query(TBL_NAME, where: "$KEY_ID = ?", whereArgs: [id]);
+    return values.isEmpty ? null : _noteFromMap(values.first);
   }
 
   @override

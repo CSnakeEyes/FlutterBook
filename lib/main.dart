@@ -1,53 +1,51 @@
 import 'package:flutter/material.dart';
 import 'Notes/Notes.dart';
+import 'package:path_provider/path_provider.dart';
+import 'Appointments/Appointments.dart';
+import 'Contacts/Avatar.dart';
+import 'Contacts/Contacts.dart';
 import 'Tasks/Tasks.dart';
 
-void main() => runApp(FlutterBook());
+void main() {
+  startMeUp() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    Avatar.docsDir = await getApplicationDocumentsDirectory();
+    runApp(FlutterBook());
+  }
+
+  startMeUp();
+}
 
 class FlutterBook extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Book',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Book',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: AppBar(
+              title: Text('FlutterBook'),
+              bottom: TabBar(tabs: [
+                Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
+                Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
+                Tab(icon: Icon(Icons.note), text: 'Notes'),
+                Tab(icon: Icon(Icons.assignment_turned_in), text: 'Tasks'),
+              ])),
+          body: TabBarView(
+            children: [
+              Appointments(),
+              Contacts(),
+              Notes(),
+              Tasks(),
+            ],
+          ),
         ),
-        home: DefaultTabController(
-            length: 4,
-            child: Scaffold(
-                appBar: AppBar(
-                  centerTitle: true,
-                    title: Text('Cristian Ayub'),
-                    bottom: TabBar(
-                        tabs: [
-                          Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
-                          Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
-                          Tab(icon: Icon(Icons.note), text: 'Notes'),
-                          Tab(icon: Icon(Icons.assignment_turned_in), text: 'Tasks'),
-                        ]
-                    )
-                ),
-                body: TabBarView(
-                    children: [
-                      Dummy('Appointments'),
-                      Dummy('Contacts'),
-                      Notes(),
-                      Tasks()]
-                )
-            )
-        )
+      ),
     );
-  }
-}
-
-class Dummy extends StatelessWidget {
-  final String _title;
-
-  Dummy(this._title);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text(_title));
   }
 }
