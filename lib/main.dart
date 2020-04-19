@@ -23,13 +23,13 @@ class FlutterBook extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Book',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: DefaultTabController(
         length: 4,
         child: Scaffold(
           appBar: AppBar(
-              title: Text('FlutterBook'),
+              title: Text('Miguel Angel Zamudio Arias'),
               bottom: TabBar(tabs: [
                 Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
                 Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
