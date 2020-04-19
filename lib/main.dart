@@ -1,0 +1,52 @@
+import 'package:flutter/material.dart';
+import 'Notes/NotesList.dart';
+
+void main() => runApp(FlutterBook());
+
+class FlutterBook extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Book',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: DefaultTabController(
+            length: 4,
+            child: Scaffold(
+                appBar: AppBar(
+                  centerTitle: true,
+                    title: Text('Cristian Ayub'),
+                    bottom: TabBar(
+                        tabs: [
+                          Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
+                          Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
+                          Tab(icon: Icon(Icons.note), text: 'Notes'),
+                          Tab(icon: Icon(Icons.assignment_turned_in), text: 'Tasks'),
+                        ]
+                    )
+                ),
+                body: TabBarView(
+                    children: [
+                      Dummy('Appointments'),
+                      Dummy('Contacts'),
+                      NotesList(),
+                      Dummy('Tasks')]
+                )
+            )
+        )
+    );
+  }
+}
+
+class Dummy extends StatelessWidget {
+  final String _title;
+
+  Dummy(this._title);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text(_title));
+  }
+}
