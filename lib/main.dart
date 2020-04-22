@@ -5,6 +5,15 @@ import 'Appointments/Appointments.dart';
 import 'Contacts/Avatar.dart';
 import 'Contacts/Contacts.dart';
 import 'Tasks/Tasks.dart';
+import 'Photos/Photos.dart';
+
+const tabs = [
+  Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
+  Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
+  Tab(icon: Icon(Icons.note), text: 'Notes'),
+  Tab(icon: Icon(Icons.assignment_turned_in), text: 'Tasks'),
+  Tab(icon: Icon(Icons.photo_album), text: 'Photos'),
+];
 
 void main() {
   startMeUp() async {
@@ -26,22 +35,18 @@ class FlutterBook extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       home: DefaultTabController(
-        length: 4,
+        length: tabs.length,
         child: Scaffold(
           appBar: AppBar(
               title: Text('Miguel Angel Zamudio Arias'),
-              bottom: TabBar(tabs: [
-                Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
-                Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
-                Tab(icon: Icon(Icons.note), text: 'Notes'),
-                Tab(icon: Icon(Icons.assignment_turned_in), text: 'Tasks'),
-              ])),
+              bottom: TabBar(tabs: tabs)),
           body: TabBarView(
             children: [
               Appointments(),
               Contacts(),
               Notes(),
               Tasks(),
+              Photos(),
             ],
           ),
         ),
