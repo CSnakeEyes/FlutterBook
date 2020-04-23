@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutterbook/Photos/PhotosModel.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class PhotosEntry extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<PhotosModel>(
@@ -44,7 +46,12 @@ class PhotosEntry extends StatelessWidget {
                       "Send to Cloud",
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      StorageReference storageReference = FirebaseStorage.instance.ref().child('bitch');
+                      StorageUploadTask uploadTask = storageReference.putFile(model.pictureFile);
+                      await uploadTask.onComplete;
+                      print('Picture uploaded!');
+                    },
                   ),
                   MaterialButton(
                     padding: EdgeInsets.all(10.0),

@@ -52,6 +52,7 @@ class _PhotosListState extends State<PhotosList> {
               await cameraController.takePicture(path);
               setState(() => isInitialized = false);
               model.path = path;
+              model.pictureFile = File(path);
               model.entityBeingEdited = File(path).readAsBytesSync();
               model.setStackIndex(1);
             }

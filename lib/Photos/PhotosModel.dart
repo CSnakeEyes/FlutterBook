@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:photo_manager/photo_manager.dart';
@@ -8,6 +9,7 @@ PhotosModel photosModel = PhotosModel();
 
 class PhotosModel extends BaseModel<Uint8List> {
   String path;
+  File pictureFile;
 
   void getAlbumImgs() async {
     entityList.clear();

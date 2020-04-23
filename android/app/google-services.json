@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "485966640539",
+    "firebase_url": "https://flutterbook-31a9f.firebaseio.com",
+    "project_id": "flutterbook-31a9f",
+    "storage_bucket": "flutterbook-31a9f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:485966640539:android:85017a78f813557a05dd3e",
+        "android_client_info": {
+          "package_name": "com.example.flutterbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "485966640539-03lbk5008v3rr7qc5187q3fih8l92ffj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABCpjOpEiOK3W8IPWNm19b0ERJ7siIwV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "485966640539-03lbk5008v3rr7qc5187q3fih8l92ffj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
