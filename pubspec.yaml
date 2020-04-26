@@ -17,7 +17,9 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  firebase_core: ^0.4.4+3
   firebase_storage: ^3.0.3
+  cloud_firestore: ^0.13.5
   flutter_calendar_carousel: ^1.4.12
   intl: ^0.15.7
   sqflite: ^1.2.0

@@ -5,14 +5,14 @@ import 'Appointments/Appointments.dart';
 import 'Contacts/Avatar.dart';
 import 'Contacts/Contacts.dart';
 import 'Tasks/Tasks.dart';
-import 'Photos/Photos.dart';
+import 'Pets/Pets.dart';
 
 const tabs = [
   Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
   Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
   Tab(icon: Icon(Icons.note), text: 'Notes'),
   Tab(icon: Icon(Icons.assignment_turned_in), text: 'Tasks'),
-  Tab(icon: Icon(Icons.photo_album), text: 'Photos'),
+  Tab(icon: Icon(Icons.pets), text: 'Pets'),
 ];
 
 void main() {
@@ -46,7 +46,7 @@ class FlutterBook extends StatelessWidget {
               Contacts(),
               Notes(),
               Tasks(),
-              Photos(),
+              Pets(),
             ],
           ),
         ),

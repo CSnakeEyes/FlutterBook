@@ -10,6 +10,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+const options = ['Local Storage', 'Cloud Storage'];
+
 class PhotosList extends StatefulWidget {
   @override
   _PhotosListState createState() => _PhotosListState();
@@ -64,8 +66,8 @@ class _PhotosListState extends State<PhotosList> {
                 child: CameraPreview(cameraController),
               )
             : GridView.count(
-                primary: false,
                 padding: EdgeInsets.all(10.0),
+                primary: false,
                 crossAxisCount: 2,
                 crossAxisSpacing: 10.0,
                 mainAxisSpacing: 10.0,

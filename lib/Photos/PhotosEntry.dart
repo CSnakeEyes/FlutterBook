@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutterbook/Photos/PhotosModel.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class PhotosEntry extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<PhotosModel>(
@@ -47,10 +45,16 @@ class PhotosEntry extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {
-                      StorageReference storageReference = FirebaseStorage.instance.ref().child('bitch');
-                      StorageUploadTask uploadTask = storageReference.putFile(model.pictureFile);
+                      StorageReference storageReference = FirebaseStorage
+                          .instance
+                          .ref()
+                          .child('images/${DateTime.now()}.png');
+                      StorageUploadTask uploadTask =
+                          storageReference.putFile(model.pictureFile);
                       await uploadTask.onComplete;
                       print('Picture uploaded!');
+                      model.entityBeingEdited = null;
+                      model.setStackIndex(0);
                     },
                   ),
                   MaterialButton(
@@ -61,8 +65,7 @@ class PhotosEntry extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {
-                      await ImageGallerySaver.saveFile(model.path);
-                      model.getAlbumImgs();
+                      model.getAlbumImgs(path: model.path);
                       model.setStackIndex(0);
                     },
                   ),
