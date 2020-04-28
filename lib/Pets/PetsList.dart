@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutterbook/Pets/PetsModel.dart';
+import 'package:getflutter/components/button/gf_button_bar.dart';
+import 'package:getflutter/components/card/gf_card.dart';
+import 'package:getflutter/getflutter.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class PetsList extends StatelessWidget {
@@ -47,10 +52,28 @@ class PetsList extends StatelessWidget {
       },
       child: Card(
         elevation: 8.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: Text(pet.name),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child: Card(
+                    clipBehavior: Clip.antiAlias,
+                    child: ClipRRect(
+                      child: Image.file(
+                        File(pet.path),
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+              ),
+              Container(
+                padding: const EdgeInsets.all(5.0),
+                child: Text(
+                  pet.name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              )
+            ]),
       ),
     );
   }

@@ -5,7 +5,7 @@ PetsModel petsModel = PetsModel();
 class Pet {
   int id;
   String name;
-  String path = "";
+  String path;
   String birthday;
   String latestVisit;
 
@@ -15,20 +15,23 @@ class Pet {
   }
 }
 
-class PetsModel extends BaseModel<Pet> with DateSelection {
+class PetsModel extends BaseModel<Pet> {
+  String path;
+  String birthday;
+  String latestVisit;
+
   void setPath(String path) {
-    print(this.entityBeingEdited.path);
-    this.entityBeingEdited.path = path;
+    this.path = path;
     notifyListeners();
   }
 
   void setBirthday(String birthday) {
-    this.entityBeingEdited.birthday = birthday;
+    this.birthday = birthday;
     notifyListeners();
   }
 
   void setLatestVisit(String latestVisit) {
-    this.entityBeingEdited.latestVisit = latestVisit;
+    this.latestVisit = latestVisit;
     notifyListeners();
   }
 }

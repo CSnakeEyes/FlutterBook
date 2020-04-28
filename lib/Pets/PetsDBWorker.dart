@@ -24,13 +24,13 @@ class PetsDBWorker {
       join(await getDatabasesPath(), DB_NAME),
       version: 1,
       onOpen: (db) async {
-        await db.execute("DROP TABLE $TBL_NAME");
-        await db.execute(
-            "CREATE TABLE IF NOT EXISTS $TBL_NAME ($KEY_ID INTEGER PRIMARY KEY, $KEY_NAME TEXT, $KEY_PATH TEXT, $KEY_BIRTHDAY TEXT, $KEY_LATESTVISIT TEXT)");
+        //await db.execute("DROP TABLE $TBL_NAME");
+        //await db.execute(
+        //"CREATE TABLE IF NOT EXISTS $TBL_NAME ($KEY_ID INTEGER PRIMARY KEY, $KEY_NAME TEXT, $KEY_PATH TEXT, $KEY_BIRTHDAY TEXT, $KEY_LATESTVISIT TEXT)");
       },
       onCreate: (db, version) async {
-        //await db.execute(
-        //    "CREATE TABLE IF NOT EXISTS $TBL_NAME ($KEY_ID INTEGER PRIMARY KEY, $KEY_NAME TEXT, $KEY_PATH TEXT, $KEY_BIRTHDAY TEXT, $KEY_LATESTVISIT TEXT)");
+        await db.execute(
+            "CREATE TABLE IF NOT EXISTS $TBL_NAME ($KEY_ID INTEGER PRIMARY KEY, $KEY_NAME TEXT, $KEY_PATH TEXT, $KEY_BIRTHDAY TEXT, $KEY_LATESTVISIT TEXT)");
       },
     );
   }

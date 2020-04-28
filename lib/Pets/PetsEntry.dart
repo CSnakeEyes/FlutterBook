@@ -20,20 +20,12 @@ class _PetsEntryState extends State<PetsEntry> {
   File imageFile;
 
   TextEditingController _nameController = TextEditingController();
-  TextEditingController _birthDateController = TextEditingController();
-  TextEditingController _lastestVisit = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   _PetsEntryState() {
     _nameController.addListener(() {
       petsModel.entityBeingEdited.name = _nameController.text;
-    });
-    _birthDateController.addListener(() {
-      petsModel.entityBeingEdited.birthday = _birthDateController.text;
-    });
-    _lastestVisit.addListener(() {
-      petsModel.entityBeingEdited.latestVisit = _lastestVisit.text;
     });
   }
 
