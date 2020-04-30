@@ -35,10 +35,9 @@ class PetsDBWorker {
     );
   }
 
+  ///This method insert a new row in the [PETS_TABLE] with the information of [pet]
   Future<void> create(Pet pet) async {
-    print(pet.toString());
     Map petMap = _petToMap(pet);
-    print(petMap);
     Database db = await database;
     await db.insert(
       TBL_NAME,
@@ -47,11 +46,13 @@ class PetsDBWorker {
     );
   }
 
+  ///This method deletes a row in the [PETS_TABLE] given an [id]
   Future<void> delete(int id) async {
     Database db = await database;
     await db.delete(TBL_NAME, where: "$KEY_ID = ?", whereArgs: [id]);
   }
 
+  ///This method gets an row in the [PETS_TABLE] given an [id]
   Future<Pet> get(int id) async {
     Database db = await database;
     var values =
@@ -59,18 +60,21 @@ class PetsDBWorker {
     return values.isEmpty ? null : _petFromMap(values.first);
   }
 
+  ///This method obtains all the rows in the [PETS_TABLE]
   Future<List<Pet>> getAll() async {
     Database db = await database;
     var values = await db.query(TBL_NAME);
     return values.isNotEmpty ? values.map((m) => _petFromMap(m)).toList() : [];
   }
 
+  ///This method updates a row in the [PETS_TABLE] given a [pet]
   Future<void> update(Pet pet) async {
     Database db = await database;
     await db.update(TBL_NAME, _petToMap(pet),
         where: "$KEY_ID = ?", whereArgs: [pet.id]);
   }
 
+  ///This method transforms a [map] to a [pet object]
   Pet _petFromMap(Map<String, dynamic> map) {
     return Pet()
       ..id = map[KEY_ID]
@@ -80,6 +84,7 @@ class PetsDBWorker {
       ..latestVisit = map[KEY_LATESTVISIT];
   }
 
+  ///This method transforms a [pet object] to a [map]
   Map<String, dynamic> _petToMap(Pet pet) {
     return Map<String, dynamic>()
       ..[KEY_NAME] = pet.name

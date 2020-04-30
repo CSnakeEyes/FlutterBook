@@ -2,11 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutterbook/Pets/PetsModel.dart';
-import 'package:getflutter/components/button/gf_button_bar.dart';
-import 'package:getflutter/components/card/gf_card.dart';
-import 'package:getflutter/getflutter.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+///Class to show a list of pets in the screen
 class PetsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -40,10 +38,12 @@ class PetsList extends StatelessWidget {
     );
   }
 
+  ///This method will build a grid of card items
   List<Widget> _buildGrid(List<Pet> pets, PetsModel model) {
     return pets.map((pet) => _buildCardItem(pet, model)).toList();
   }
 
+  ///This method will build a card item of the grid
   Widget _buildCardItem(Pet pet, PetsModel model) {
     return GestureDetector(
       onTap: () {

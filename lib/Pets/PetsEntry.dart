@@ -9,6 +9,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 import '../utils.dart';
 
+///Class to modify or create a new pet item
 class PetsEntry extends StatefulWidget {
   @override
   _PetsEntryState createState() => _PetsEntryState();
@@ -24,6 +25,7 @@ class _PetsEntryState extends State<PetsEntry> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   _PetsEntryState() {
+    ///Set listener controller for name input
     _nameController.addListener(() {
       petsModel.entityBeingEdited.name = _nameController.text;
     });
@@ -46,6 +48,8 @@ class _PetsEntryState extends State<PetsEntry> {
                 children: <Widget>[
                   FlatButton(
                     child: Text("Cancel"),
+
+                    ///When the user press it, it will return to [PetsList]
                     onPressed: () {
                       FocusScope.of(context).requestFocus(FocusNode());
                       model.setStackIndex(0);
@@ -106,6 +110,9 @@ class _PetsEntryState extends State<PetsEntry> {
                     title: TextFormField(
                       decoration: InputDecoration(hintText: 'Name'),
                       controller: _nameController,
+
+                      ///When the input is pressed the user will be able to type and
+                      ///update the value of [name]
                       validator: (String value) {
                         return (value.length == 0
                             ? 'Please enter a name'
@@ -123,6 +130,9 @@ class _PetsEntryState extends State<PetsEntry> {
                     trailing: IconButton(
                         icon: Icon(Icons.edit),
                         color: Colors.red,
+
+                        ///When the button is pressed the ui will show a date picker
+                        ///and allow the user to update [birthay]
                         onPressed: () async {
                           try {
                             String chosenDate = await selectDate(
@@ -149,6 +159,9 @@ class _PetsEntryState extends State<PetsEntry> {
                     trailing: IconButton(
                         icon: Icon(Icons.edit),
                         color: Colors.red,
+
+                        ///When the button is pressed the ui will show a date picker
+                        ///and allow the user to update [latestVisit]
                         onPressed: () async {
                           try {
                             String chosenDate = await selectDate(
@@ -173,6 +186,8 @@ class _PetsEntryState extends State<PetsEntry> {
     );
   }
 
+  ///This method will show an error if there was a problem
+  ///selecting an image from the fallery
   Text _getRetrieveErrorWidget() {
     if (_retrieveDataError != null) {
       final Text result = Text(_retrieveDataError);
@@ -182,11 +197,15 @@ class _PetsEntryState extends State<PetsEntry> {
     return null;
   }
 
+  ///This method allows the user to preview the selected image in the gallery
   Widget _previewImage() {
+    ///Check if there was an erryr
     final Text retrieveError = _getRetrieveErrorWidget();
     if (retrieveError != null) {
       return retrieveError;
     }
+
+    ///Check if a file was selected
     if (imageFile != null) {
       return Image.file(imageFile);
     } else if (_pickImageError != null) {
@@ -202,6 +221,9 @@ class _PetsEntryState extends State<PetsEntry> {
     }
   }
 
+  ///This method helps to retrieve the lost data when
+  ///the app redirects the user to the gallery, this the app is destroyed at that moment
+  ///(just android devices)
   Future<void> retrieveLostData() async {
     final LostDataResponse response = await ImagePicker.retrieveLostData();
     if (response.isEmpty) {
@@ -216,25 +238,34 @@ class _PetsEntryState extends State<PetsEntry> {
     }
   }
 
+  ///This method saves a pet model in the local database
   void _saveLocal(BuildContext context, PetsModel model) async {
+    ///If any field is empty, don't proceed
     if (!_formKey.currentState.validate()) {
       return;
     }
     model.setPath(imageFile.path);
+
+    ///Check if it is an existent document to know if creation or update is needed
     if (model.entityBeingEdited.id != null) {
       await PetsDBWorker.db.update(model.entityBeingEdited);
     } else {
       await PetsDBWorker.db.create(model.entityBeingEdited);
     }
+
+    ///Return to [PetsList]
     model.loadData(PetsDBWorker.db);
     model.setStackIndex(0);
   }
 
+  ///This method saves a pet model in the cloud
   void _saveInCloud(PetsModel model) async {
+    ///If any field is empty, don't proceed
     if (!_formKey.currentState.validate()) {
       return;
     }
 
+    ///Otherwise, add info to the could and return to [PetList]
     try {
       await Firestore.instance
           .collection('pets')
@@ -253,10 +284,14 @@ class _PetsEntryState extends State<PetsEntry> {
     }
   }
 
+  ///This method opens the gallery so that the user can pick a photo from the gallery
+  ///once the image is selected, the state [imageFile] will be updated
   Future _selectImage(BuildContext context) async {
-    File galleryImage = await ImagePicker.pickImage(
-      source: ImageSource.gallery,
-    );
+    ///Open gallery
+    File galleryImage =
+        await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    ///Update state
     setState(() {
       imageFile = galleryImage;
     });

@@ -7,6 +7,7 @@ import 'PetsEntry.dart';
 
 class Pets extends StatelessWidget {
   Pets() {
+    //Load pets stored in the database
     petsModel.loadData(PetsDBWorker.db);
   }
 
